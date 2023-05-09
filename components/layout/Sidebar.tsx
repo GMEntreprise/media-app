@@ -6,6 +6,7 @@ import { BiLogOut, BiMessage } from "react-icons/bi";
 // Composant
 import { SidebarLogo } from "./SidebarLogo";
 import { SidebarItem } from "./SidebarItem";
+import { SidebarUnityButton } from "./SidebarUnityButton";
 
 // Navigation Tab
 const items = [
@@ -45,7 +46,7 @@ export const Sidebar = () => {
             );
           })}
           <SidebarItem onClick={() => {}} icon={BiLogOut} label="Déconnexion" />
-          {/* <SidebarTweetButton /> */}
+          <SidebarUnityButton />
         </div>
       </div>
     </div>
