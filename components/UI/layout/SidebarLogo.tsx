@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
 
 export const SidebarLogo = () => {
   // Router

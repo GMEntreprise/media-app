@@ -1,3 +1,14 @@
+// Librairy
+
+// Components
+import { Header } from "@/components/UI/Header";
+
 export default function Home() {
-  return <div className="text-3xl text-sky-500">Hello worlds !</div>;
+  // Function
+
+  return (
+    <>
+      <Header label="Acceuil" />
+    </>
+  );
 }

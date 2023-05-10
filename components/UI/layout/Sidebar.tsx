@@ -1,6 +1,6 @@
 // Library
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaBible } from "react-icons/fa";
 import { BiLogOut, BiMessage } from "react-icons/bi";
 
 // Composant
@@ -20,6 +20,7 @@ const items = [
     href: "/notifications",
     icon: BsBellFill,
   },
+  { label: "Bible", href: "/bible", icon: FaBible },
   { label: "Messages", href: "/messages", icon: BiMessage },
 
   {
