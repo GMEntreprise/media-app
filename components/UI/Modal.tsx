@@ -26,7 +26,6 @@ export const Modal: React.FC<ModalProps> = ({
   actionLabel,
   disabled,
 }) => {
-  console.log("actionLabel:", actionLabel);
   // Closes Modal
   const handleClose = useCallback(() => {
     if (disabled) {
