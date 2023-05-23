@@ -78,7 +78,7 @@ export const RegisterModal = () => {
       />
     </div>
   );
-  console.log(bodyContent);
+  // console.log(bodyContent);
 
   // Footer Content
 

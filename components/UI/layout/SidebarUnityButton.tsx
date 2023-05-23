@@ -4,13 +4,26 @@ import { useRouter } from "next/router";
 import { FaFeather } from "react-icons/fa";
 import { RiCommunityFill } from "react-icons/ri";
 import { GiAncientSword } from "react-icons/gi";
+import { useCallback } from "react";
 
 // Components
+import useLoginModal from "@/hooks/useLoginModal";
 
 export const SidebarUnityButton = () => {
+  // Router
   const router = useRouter();
+  // Login
+  const loginModal = useLoginModal();
+
+  // useCallBack Function qui permet quand on va cliquer sur le button Heist va ouvrir le Modal de register
+
+  const onClick = useCallback(() => {
+    //
+    loginModal.onOpen();
+  }, [loginModal]);
+
   return (
-    <div onClick={() => router.push("/")}>
+    <div onClick={onClick}>
       <button className="mt-6 lg:hidden rounded-full h-14 w-14 p-4 flex items-center justify-center bg-lime-500 hover:bg-opacity-80 transition cursor-pointer">
         {/* <FaFeather size={24} color="#fff" /> */}
         {/* <RiCommunityFill size={24} color="#fff" /> */}
