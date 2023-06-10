@@ -1,7 +1,9 @@
 // Librairy
 
 import { useCallback, useState } from "react";
-
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 // Components
 
 import { Input } from "../UI/Input";
@@ -41,13 +43,30 @@ export const RegisterModal = () => {
       setIsLoading(true);
 
       // TODO ADD Register and Login
+      // Envoi d'une requête POST à l'endpoint "/api/register" avec les données spécifiées
+      await axios.post("/api/register", {
+        email, // Adresse e-mail de l'utilisateur
+        password, // Mot de passe de l'utilisateur
+        username, // Nom d'utilisateur de l'utilisateur
+        name, // Nom complet de l'utilisateur
+      });
+
+      // Affichage d'un message de succès à l'aide de la bibliothèque de notifications Toast
+      toast.success("Votre compte a bien été créé.");
+
+      signIn("credentials", {
+        email,
+        password,
+      });
+
       registerModal.onClose();
     } catch (error) {
       console.log(error);
+      toast.error("une erreur s'est produite.");
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal]);
+  }, [registerModal, email, password, username, name]);
 
   // BODYCONTENT
   const bodyContent = (
@@ -73,6 +92,7 @@ export const RegisterModal = () => {
       <Input
         placeholder="Mot de passe"
         onChange={(e) => setPassword(e.target.value)}
+        type="password"
         value={password}
         disabled={isLoading}
       />
