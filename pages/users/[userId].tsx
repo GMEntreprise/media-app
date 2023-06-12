@@ -6,6 +6,7 @@ import { ClipLoader } from "react-spinners"; // Importation du composant ClipLoa
 import useUser from "../../hooks/useUser"; // Importation du hook useUser depuis le fichier "../../hooks/useUser"
 import { Header } from "../../components/UI/Header"; // Importation du composant Header depuis le fichier "../../components/UI/Header"
 import { UserHero } from "@/components/users/UserHero"; // Importation du composant UserHero depuis le fichier "@/components/users/UserHero"
+import { UserBio } from "@/components/users/UserBio";
 
 const UserView = () => {
   const router = useRouter(); // Initialisation du hook useRouter pour accéder à l'objet router
@@ -26,8 +27,8 @@ const UserView = () => {
   return (
     <>
       <Header showBackArrow label={fetchedUser?.name} />
-
       <UserHero userId={userId as string} />
+      <UserBio userId={userId as string} />
     </>
   );
 };
