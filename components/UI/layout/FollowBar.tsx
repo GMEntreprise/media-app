@@ -22,8 +22,6 @@ export const FollowBar = () => {
           {/* TODO USER LIST */}
 
           {users.map((user: Record<string, any>) => {
-            console.log(user.name);
-
             return (
               <div key={user.id} className="flex flex-row gap-4">
                 <Avatar userId={user.id} />

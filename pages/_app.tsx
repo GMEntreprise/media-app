@@ -7,6 +7,7 @@ import { SessionProvider } from "next-auth/react";
 import { Layout } from "../components/UI/Layout";
 import { LoginModal } from "@/components/Modals/LoginModal";
 import { RegisterModal } from "@/components/Modals/RegisterModal";
+import EditModal from "@/components/Modals/EditModal";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -16,6 +17,10 @@ export default function App({ Component, pageProps }: AppProps) {
         {/* Affiche les notifications Toast */}
         <Toaster />
         {/* Affiche le modal d'inscription */}
+
+        <EditModal />
+        {/* Affiche le modal Edit */}
+
         <RegisterModal />
         {/* Affiche le modal de connexion */}
         <LoginModal />
