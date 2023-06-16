@@ -17,6 +17,7 @@ export const UserHero: React.FC<UserHeroProps> = ({ userId }) => {
           <Image
             src={fetchedUser.coverImage}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             alt="Image de couverture"
             style={{ objectFit: "cover" }}
           />

@@ -10,6 +10,7 @@ import useUser from "@/hooks/useUser";
 // Components
 import { Modal } from "../UI/Modal";
 import { Input } from "../UI/Input";
+import ImageUpload from "../UI/ImageUpload";
 
 const EditModal = () => {
   // Récupération des données de l'utilisateur actuellement connecté
@@ -29,11 +30,11 @@ const EditModal = () => {
 
   // Mise à jour des états des champs avec les valeurs de l'utilisateur actuel au montage du composant
   useEffect(() => {
-    setProfileImage(currentUser?.profileImage);
-    setCoverImage(currentUser?.coverImage);
-    setName(currentUser?.name);
-    setUserName(currentUser?.username);
-    setBio(currentUser?.bio);
+    setProfileImage(currentUser?.profileImage || ""); // Utilise une chaîne vide si la valeur est null ou non définie
+    setCoverImage(currentUser?.coverImage || "");
+    setName(currentUser?.name || "");
+    setUserName(currentUser?.username || "");
+    setBio(currentUser?.bio || "");
   }, [
     currentUser?.name,
     currentUser?.username,
@@ -84,26 +85,42 @@ const EditModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
+      <ImageUpload
+        label="Télécharger une image de profil"
+        value={profileImage}
+        disabled={isLoading}
+        onChange={(image) => setProfileImage(image)}
+      />
+      <ImageUpload
+        label="Télécharger une image de couverture"
+        value={coverImage}
+        disabled={isLoading}
+        onChange={(image) => setCoverImage(image)}
+      />
       <Input
         placeholder="Nom"
-        value={name || ""}
         onChange={(e) => setName(e.target.value)}
+        value={name}
         disabled={isLoading}
       />
       <Input
         placeholder="Nom d'utilisateur"
-        value={username || ""}
         onChange={(e) => setUserName(e.target.value)}
+        value={username}
         disabled={isLoading}
       />
       <Input
         placeholder="Bio"
-        value={bio || ""}
         onChange={(e) => setBio(e.target.value)}
+        value={bio}
         disabled={isLoading}
       />
     </div>
   );
+
+  //   console.log("Valeur : " + name);
+  //   console.log("Valeur : " + username);
+  //   console.log("Valeur : " + bio);
 
   return (
     <Modal

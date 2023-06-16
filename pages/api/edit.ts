@@ -1,12 +1,12 @@
-import serverAuth from "@/libs/serverAuth"; // Importe le module `serverAuth` depuis le chemin "@/libs/serverAuth"
 import { NextApiRequest, NextApiResponse } from "next"; // Importe les types NextApiRequest et NextApiResponse depuis le module "next"
 import prisma from "@/libs/prismadb"; // Importe l'instance Prisma depuis le chemin "@/libs/prismadb"
+import serverAuth from "@/libs/serverAuth"; // Importe le module `serverAuth` depuis le chemin "@/libs/serverAuth"
 
 export default async function handler(
   req: NextApiRequest, // Représente la demande entrante de l'API
   res: NextApiResponse // Représente la réponse de l'API
 ) {
-  if (req.method !== "PATH") {
+  if (req.method !== "PATCH") {
     // Vérifie si la méthode de la requête n'est pas "PATCH"
     return res.status(405).end(); // Retourne une réponse avec le code d'état 405 (Méthode non autorisée) et termine la fonction
   }
@@ -33,6 +33,7 @@ export default async function handler(
         coverImage,
       },
     });
+    console.log(updateUser);
 
     return res.status(200).json(updateUser); // Retourne une réponse avec le code d'état 200 (OK) et les données de l'utilisateur mis à jour au format JSON
   } catch (error) {

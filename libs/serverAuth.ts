@@ -1,5 +1,5 @@
 // Librairies et modules nécessaires
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "@/libs/prismadb";
 
@@ -7,7 +7,6 @@ import prisma from "@/libs/prismadb";
 const serverAuth = async (req: NextApiRequest) => {
   // Récupération de la session utilisateur à partir de la requête
   const session = await getSession({ req });
-  console.log(session);
 
   // Vérification si l'utilisateur est connecté
   if (!session?.user?.email) {
