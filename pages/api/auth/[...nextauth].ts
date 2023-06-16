@@ -1,66 +1,55 @@
-// Librairy
 import bcrypt from "bcrypt";
-import Nextauth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-// Components
 import prisma from "@/libs/prismadb";
 
-export default Nextauth({
-  adapter: PrismaAdapter(prisma),
+export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma), // Utilise PrismaAdapter pour connecter NextAuth à la base de données Prisma
   providers: [
-    // CredentialsProvider: Un fournisseur d'authentification qui utilise les informations d'identification (nom d'utilisateur et mot de passe) pour l'authentification.
     CredentialsProvider({
       name: "credentials",
-
-      /*  `credentials` est utilisé pour générer un formulaire sur la page de connexion.
-     Vous pouvez spécifier quels champs doivent être soumis, en ajoutant des clés à l'objet `credentials`.
-     Par exemple, domaine, nom d'utilisateur, mot de passe, jeton 2FA, etc.
-     Vous pouvez passer n'importe quel attribut HTML à la balise <input> à travers l'objet.
-    credentials: { */
-
       credentials: {
-        //       Ajouter une logique ici pour rechercher l'utilisateur à partir des informations d'identification fournies.
-        email: { label: "email", type: "text" },
+        email: { label: "email", type: "text" }, // Définit les champs d'identification (email et mot de passe) pour le fournisseur "credentials"
         password: { label: "password", type: "password" },
       },
-      /** La méthode authorize est définie pour effectuer la logique d'autorisation personnalisée. Dans cet exemple, elle vérifie si les informations d'identification sont valides en recherchant l'utilisateur correspondant à l'e-mail fourni, en vérifiant le hachage du mot de passe, et en renvoyant l'utilisateur s'il est valide. */
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("invalid credentials");
+          throw new Error("Invalid credentials"); // Si les identifiants ne sont pas fournis, lance une erreur de "Invalid credentials"
         }
 
         const user = await prisma.user.findUnique({
           where: {
-            email: credentials.email,
+            email: credentials.email, // Recherche l'utilisateur dans la base de données en utilisant l'email fourni
           },
         });
 
         if (!user || !user?.hashedPassword) {
-          throw new Error("invalid credentials");
+          throw new Error("Invalid credentials"); // Si l'utilisateur n'est pas trouvé ou si son mot de passe haché est vide, lance une erreur de "Invalid credentials"
         }
-        // bcrypt: Une bibliothèque de hachage de mots de passe utilisée pour vérifier les mots de passe hachés.
+
         const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
+          credentials.password, // Compare le mot de passe fourni avec le mot de passe haché de l'utilisateur dans la base de données
           user.hashedPassword
         );
 
         if (!isCorrectPassword) {
-          throw new Error("invalid credentials");
+          throw new Error("Invalid credentials"); // Si les mots de passe ne correspondent pas, lance une erreur de "Invalid credentials"
         }
 
-        return user;
+        return user; // Retourne l'utilisateur si l'authentification réussit
       },
     }),
   ],
-
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === "development", // Active le mode de débogage uniquement en environnement de développement
   session: {
-    strategy: "jwt",
+    strategy: "jwt", // Utilise la stratégie d'authentification JWT (JSON Web Token)
   },
   jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
+    secret: process.env.NEXTAUTH_JWT_SECRET, // Clé secrète utilisée pour signer les JWT (JSON Web Tokens)
   },
-  secret: process.env.NEXTAUTH_SECRET,
-});
+  secret: process.env.NEXTAUTH_SECRET, // Clé secrète utilisée pour sécuriser les cookies de session
+};
+
+export default NextAuth(authOptions); // Exporte l'instance NextAuth avec les options d'authentification configurées

@@ -16,7 +16,7 @@ export default async function handler(
 
   try {
     // Appel de la fonction serverAuth pour vérifier l'authentification de l'utilisateur
-    const { currentUser } = await serverAuth(req);
+    const { currentUser } = await serverAuth(req, res);
 
     // Si l'authentification est réussie, le gestionnaire de requêtes renvoie une réponse avec le code d'état 200 et renvoie l'objet de l'utilisateur courant sous forme de JSON.
     return res.status(200).json(currentUser);

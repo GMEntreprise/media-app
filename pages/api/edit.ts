@@ -12,7 +12,7 @@ export default async function handler(
   }
 
   try {
-    const { currentUser } = await serverAuth(req); // Exécute la fonction serverAuth pour authentifier l'utilisateur et récupère le currentUser
+    const { currentUser } = await serverAuth(req, res); // Exécute la fonction serverAuth pour authentifier l'utilisateur et récupère le currentUser
     const { name, username, bio, profileImage, coverImage } = req.body; // Récupère les valeurs des champs name, username, bio, profileImage et coverImage depuis le corps de la requête
 
     if (!name || !username) {
@@ -33,7 +33,6 @@ export default async function handler(
         coverImage,
       },
     });
-    console.log(updateUser);
 
     return res.status(200).json(updateUser); // Retourne une réponse avec le code d'état 200 (OK) et les données de l'utilisateur mis à jour au format JSON
   } catch (error) {

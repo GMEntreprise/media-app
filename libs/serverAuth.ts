@@ -1,32 +1,26 @@
-// Librairies et modules nécessaires
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import prisma from "@/libs/prismadb";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
-// Fonction de gestion de l'authentification côté serveur
-const serverAuth = async (req: NextApiRequest) => {
-  // Récupération de la session utilisateur à partir de la requête
-  const session = await getSession({ req });
+const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getServerSession(req, res, authOptions); // Récupère la session d'utilisateur à partir de la requête HTTP en utilisant les options d'authentification définies dans authOptions
 
-  // Vérification si l'utilisateur est connecté
   if (!session?.user?.email) {
-    throw new Error("Vous n'êtes pas connecté");
+    throw new Error("Vous n'êtes pas connecté"); // Si la session ou l'email de l'utilisateur n'est pas disponible, lance une erreur "Vous n'êtes pas connecté"
   }
 
-  // Recherche de l'utilisateur dans la base de données en utilisant l'adresse e-mail de la session
   const currentUser = await prisma.user.findUnique({
     where: {
-      email: session.user.email,
+      email: session.user.email, // Recherche l'utilisateur dans la base de données en utilisant l'email de la session
     },
   });
 
-  // Vérification si l'utilisateur existe dans la base de données
   if (!currentUser) {
-    throw new Error("Vous n'êtes pas connecté");
+    throw new Error("Vous n'êtes pas connecté"); // Si l'utilisateur n'est pas trouvé dans la base de données, lance une erreur "Vous n'êtes pas connecté"
   }
 
-  // Retourne l'utilisateur courant
-  return { currentUser };
+  return { currentUser }; // Retourne l'utilisateur actuellement connecté
 };
 
 export default serverAuth;
