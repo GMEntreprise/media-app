@@ -1,6 +1,7 @@
 // Library
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
-import { FaUser, FaBible } from "react-icons/fa";
+import { FaUser, FaBible, FaPrayingHands } from "react-icons/fa";
+
 import { BiLogOut, BiMessage } from "react-icons/bi";
 import { signOut } from "next-auth/react";
 
@@ -28,10 +29,11 @@ export const Sidebar = () => {
     },
     { label: "Bible", href: "/bible", icon: FaBible },
     { label: "Messages", href: "/messages", icon: BiMessage },
+    { label: "Témoigner", href: "/temoigner", icon: FaPrayingHands },
 
     {
       label: "Profile",
-      href: "/users/123",
+      href: `/users/${currentUser?.id}`,
       icon: FaUser,
       auth: true,
     },
