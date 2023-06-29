@@ -1,7 +1,20 @@
-interface PostFeed {}
+import usePosts from "@/hooks/usePosts";
+import { PostItem } from "./PostItem";
 
-const PostFeed: React.FC<PostFeed> = () => {
-  return <div>PostFeed</div>;
+interface PostFeedProps {
+  userId?: string;
+}
+
+const PostFeed: React.FC<PostFeedProps> = ({ userId }) => {
+  const { data: posts = [] } = usePosts(userId);
+
+  return (
+    <>
+      {posts.map((post: Record<string, any>) => {
+        return <PostItem key={post.id} userId={userId} data={post} />;
+      })}
+    </>
+  );
 };
 
 export default PostFeed;

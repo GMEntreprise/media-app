@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.6",
-    "@prisma/client": "4.14.0",
+    "@prisma/client": "4.16.1",
     "@types/bcrypt": "^5.0.0",
     "@types/node": "20.1.0",
     "@types/react": "18.2.6",
@@ -40,7 +40,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "daisyui": "^2.51.6",
-    "prisma": "^4.15.0",
+    "prisma": "^4.16.1",
     "sass": "^1.62.1"
   }
 }
